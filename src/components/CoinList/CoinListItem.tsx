@@ -1,30 +1,49 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import CryptoCurrencyItem from '../../types/CryptoCurrency';
 
-function CoinListItem() {
+function formatNumber(value:number) {
+  if (value >= 1000000000000) {
+    return (value / 1000000000000).toFixed(2) + ' T';
+  } else if (value >= 1000000000) {
+      return (value / 1000000000).toFixed(2) + ' Bn';
+  } else if (value >= 1000000) {
+      return (value / 1000000).toFixed(2) + ' Mn';
+  } else if (value >= 1000) {
+    return (value / 1000).toFixed(2) + ' K';
+  } else {
+      return value.toString();
+  }
+}
+
+interface CoinListItemProps {
+  coinData: CryptoCurrencyItem;
+}
+
+
+
+function CoinListItem({coinData}:CoinListItemProps) {
   return (
     <View style={[styles.coinItem, styles.flexRow, styles.alignCenter, styles.justifyBetween]}>
         <View style={[styles.justifyBetween, styles.flexRow, styles.alignCenter]}>
           <View style={styles.symbolCover}>
-            <Image source={{uri:'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880'}} style={{width:'100%', height:'100%'}}/>
+            <Image source={{uri:coinData.image}} style={{width:'100%', height:'100%', borderRadius: 100}}/>
           </View>
           <View style={styles.flexColumn}>
-            <Text style={styles.title}>Bitcoin</Text>
+            <Text style={styles.title}>{coinData.name}</Text>
             <View style={{flexDirection:'row', alignItems: 'center'}}>
-              <Text style={[styles.desc, styles.position]}>1</Text>
-              <Text style={[styles.desc, styles.coinName]}>Bitcoin</Text>
-              <AntDesign name="caretdown" style={styles.up} size={24}  />
-              <Text style={styles.desc}>1.02 %</Text>
+              <Text style={[styles.desc, styles.position]}>{coinData.market_cap_rank}</Text>
+              <Text style={[styles.desc, styles.coinName]}>{coinData.symbol.toUpperCase()}</Text>
+              {coinData.price_change_percentage_24h && (coinData.price_change_percentage_24h < 0 ? <AntDesign name="caretdown" style={styles.down} size={24}  /> : <AntDesign name="caretup" style={styles.up} size={24}  />)}
+              {coinData.price_change_percentage_24h && <Text style={styles.desc}>{Math.abs(Number(coinData.price_change_percentage_24h.toFixed(2)))} %</Text>}
             </View>
           </View>
         </View>
-        <View style={styles.flexColumn}>
-          <Text style={styles.title}>Bitcoin</Text>
+        <View style={[styles.flexColumn, {alignItems: 'flex-end'}]}>
+          <Text style={styles.title}>{coinData.current_price}</Text>
           <View style={{flexDirection:'row'}}>
-            <Text style={[styles.desc, styles.position]}>1</Text>
-            <Text style={styles.desc}>Bitcoin</Text>
-            <Text style={styles.desc}>1.02 %</Text>
+            <Text style={styles.desc}>MCap {formatNumber(coinData.market_cap)} Bn</Text>
           </View>
         </View>
       </View>
@@ -80,6 +99,11 @@ const styles = StyleSheet.create({
     up:{
       fontSize: 14,
       color:'rgb(23, 223, 148)',
+      marginRight: 4
+    },
+    down:{
+      fontSize: 14,
+      color:'rgb(223, 100,100)',
       marginRight: 4
     }
 });

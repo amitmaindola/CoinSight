@@ -1,30 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import CoinListItem from './CoinListItem'
-import { Text, ScrollView } from 'react-native';
+import { Text, ScrollView, FlatList } from 'react-native';
+const data = require('../../data/cryptocurrencies.json')
+
+import CryptoCurrencyItem from '../../types/CryptoCurrency';
 
 function CoinList(){
+    const [cryptoCurrenciesData, setCryptoCurrenciesData] = useState<CryptoCurrencyItem[] | null>(null);
+    
+    useEffect(() => {
+        // const fetchData = async () => {
+        //   try {
+        //     const response = await fetch('../../data/cryptocurrencies.json');
+        //     const data = await response.json();
+        //     setCryptoCurrenciesData(data);
+        //   } catch (err) {
+        //     console.error('Error reading JSON file:', err);
+        //   }
+        // };
+    
+        // fetchData();
+        setCryptoCurrenciesData(data)
+      }, []);
+
 
     return (
-        <ScrollView>
-            <CoinListItem />
-            <CoinListItem />
-            <CoinListItem />
-            <CoinListItem />
-            <CoinListItem />
-            <CoinListItem />
-            <CoinListItem />
-            <CoinListItem />
-            <CoinListItem />
-            <CoinListItem />
-            <CoinListItem />
-            <CoinListItem />
-            <CoinListItem />
-            <CoinListItem />
-            <CoinListItem />
-            <CoinListItem />
-            {/* <Text style={{color: 'white'}}>{JSON.stringify(cryptoCurrenciesData)}</Text>
-            <Text style={{color: 'white'}}>{JSON.stringify(error)}</Text> */}
-        </ScrollView>
+
+            <FlatList
+              data={cryptoCurrenciesData}
+              renderItem={({item}) => <CoinListItem coinData={item}/>}
+              keyExtractor={item => item.id}
+            />
             
     )
 }
