@@ -5,9 +5,9 @@ import CoinDetails from './src/screens/CoinDetails';
 export default function App() {
   return (
     <View style={styles.container}>
-        {/* <Home /> */}
-        <CoinDetails />
-        <StatusBar barStyle="light-content" />
+        <Home />
+        {/* <CoinDetails /> */}
+        <StatusBar barStyle="light-content" backgroundColor="#121212"/>
     </View>
   );
 }
