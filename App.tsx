@@ -1,10 +1,12 @@
 import { Image, StatusBar,StyleSheet, Text, View } from 'react-native';
 import Home from './src/screens/Home';
+import CoinDetails from './src/screens/CoinDetails';
 
 export default function App() {
   return (
     <View style={styles.container}>
-        <Home />
+        {/* <Home /> */}
+        <CoinDetails />
         <StatusBar barStyle="light-content" />
     </View>
   );
@@ -13,7 +15,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#121212',
-    flex: 1
+    flex: 1,
+    // paddingHorizontal: 15
   },
   
   title:{
