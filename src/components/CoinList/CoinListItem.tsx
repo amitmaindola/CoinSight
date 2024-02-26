@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import CryptoCurrencyItem from '../../types/CryptoCurrency';
 import { useNavigation } from '@react-navigation/native';
 type Nav = {
-  navigate: (value: string) => void;
+  navigate: (value: string, params: {coinId: string}) => void;
 }
 
 
@@ -33,7 +33,7 @@ function CoinListItem({coinData}:CoinListItemProps) {
   const { navigate } = useNavigation<Nav>()
 
   return (
-    <Pressable onPress={()=>{ navigate("CoinDetails") }} style={[styles.coinItem, styles.flexRow, styles.alignCenter, styles.justifyBetween]}>
+    <Pressable onPress={()=>{ navigate("CoinDetails", {coinId: coinData.id}) }} style={[styles.coinItem, styles.flexRow, styles.alignCenter, styles.justifyBetween]}>
         <View style={[styles.justifyBetween, styles.flexRow, styles.alignCenter]}>
           <View style={styles.symbolCover}>
             <Image source={{uri:coinData.image}} style={{width:'100%', height:'100%', borderRadius: 100}}/>

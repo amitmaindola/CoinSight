@@ -8,8 +8,8 @@ import { ChartDataFromAPI, TimeDuration } from '../../types';
 import { getCoinMarketChart, getDetailedCoinData } from '../../services/requests';
 import styles from './styles';
 import Loader from '../../components/Loader/Loader';
-
-const {image : {small}, symbol, name, market_data : {market_cap_rank, current_price, price_change_percentage_24h}} = Coin;
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStackParamList } from '../../navigation';
 
 const getDuration = (hours:number):TimeDuration => {
   const currentTime:number = new Date().getTime();
@@ -21,13 +21,15 @@ const getDuration = (hours:number):TimeDuration => {
   return duration;
 }
 
-const fetchChartData = async (setPriceArray:Function, duration: TimeDuration):Promise<void> =>{
-  setPriceArray(await getCoinMarketChart('bitcoin', duration))
+const fetchChartData = async (coinId:string, setPriceArray:Function, duration: TimeDuration):Promise<void> =>{
+  setPriceArray(await getCoinMarketChart(coinId, duration))
   // console.log(getDuration(24))
+  
 }
 
-const fetchCoinData = async():Promise<void> => {
-
+const fetchCoinData = async(coinId:string, setCoinDetails:Function):Promise<void> => {
+  const result = await getDetailedCoinData(coinId)
+  setCoinDetails(result)
 }
 
 function CoinDetails() {
@@ -36,40 +38,56 @@ function CoinDetails() {
   const [duration, setDuration] = useState<TimeDuration>(
     getDuration(24)
   )
-  const [CoinDetails, setCoinDetails] = useState()
+  const [CoinDetails, setCoinDetails] = useState(Coin)
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  useEffect(()=>{
-    fetchChartData(setPriceArray, duration)
-  }, [duration])
 
   // useEffect(()=>{
   //   if(isLoading) setPriceArray({prices: [], market_caps:[], total_volumes:[]})
   // }, [isLoading])
 
   useEffect(()=>{
-    console.log("Array Length: ", priceArray.prices.length)
+    // console.log("Array Length: ", priceArray.prices.length)
     setIsLoading(false);
   }, [priceArray])
 
+  
+
+  // Route
+  
+  type CoinDetailsRouteProp = RouteProp<RootStackParamList, 'CoinDetails'>;
+  const route = useRoute<CoinDetailsRouteProp>()
+
+  useEffect(()=>{
+    if(!route.params){
+      fetchCoinData('bitcoin', setCoinDetails)
+    }
+    else{
+      fetchCoinData((route.params).coinId, setCoinDetails)
+    }
+  }, [])
+
+  useEffect(()=>{
+    fetchChartData(route.params.coinId, setPriceArray, duration)
+  }, [duration])
+
   return (
     <View>
-      <CoinDetailsHeader image={small} symbol={symbol} name={name} market_cap_rank={market_cap_rank}/>
+      <CoinDetailsHeader image={CoinDetails.image.small} symbol={CoinDetails.symbol} name={CoinDetails.name} market_cap_rank={CoinDetails.market_data.market_cap_rank}/>
       <View style={{padding: 10}}>
-        <Text style={styles.text}>{name}</Text>
+        <Text style={styles.text}>{CoinDetails.name}</Text>
         <View style={styles.priceContainer}>
-          <Text style={styles.price}>$ {current_price.usd}</Text>
-          <View style={[styles.percentageChange, {backgroundColor: price_change_percentage_24h > 0 ? "rgb(23, 198, 132)" : "rgb(198, 130, 23)"}]}>
-            <AntDesign style={styles.changeIcon} name={price_change_percentage_24h > 0 ? "caretup" : "caretdown"} size={18} color="white" />
-            <Text style={styles.text}>{Math.abs(Number(price_change_percentage_24h.toFixed(2)))} %</Text>
+          <Text style={styles.price}>$ {CoinDetails.market_data.current_price.usd}</Text>
+          <View style={[styles.percentageChange, {backgroundColor: CoinDetails.market_data.price_change_percentage_24h > 0 ? "rgb(23, 198, 132)" : "rgb(198, 130, 23)"}]}>
+            <AntDesign style={styles.changeIcon} name={CoinDetails.market_data.price_change_percentage_24h > 0 ? "caretup" : "caretdown"} size={18} color="white" />
+            <Text style={styles.text}>{Math.abs(Number(CoinDetails.market_data.price_change_percentage_24h.toFixed(2)))} %</Text>
           </View>
         </View>
       </View>
       <View style={styles.buttonsWrapper}>
-        <Button color={'#222'} title='24 Hour' onPress={()=>{setDuration(getDuration(24)); setIsLoading(true); console.log("Clicked")}}/>
-        <Button color={'#222'} title='1 Weak' onPress={()=>{setDuration(getDuration(7*24)); setIsLoading(true); console.log("Clicked")}}/>
-        <Button color={'#222'} title='1 Month' onPress={()=>{setDuration(getDuration(30*24)); setIsLoading(true); console.log("Clicked")}}/>
-        <Button color={'#222'} title='1 Year' onPress={()=>{setDuration(getDuration(24*365)); setIsLoading(true); console.log("Clicked")}}/>
+        <Button color={'#222'} title='24 Hour' onPress={()=>{setDuration(getDuration(24)); setIsLoading(true); }}/>
+        <Button color={'#222'} title='1 Weak' onPress={()=>{setDuration(getDuration(7*24)); setIsLoading(true); }}/>
+        <Button color={'#222'} title='1 Month' onPress={()=>{setDuration(getDuration(30*24)); setIsLoading(true); }}/>
+        <Button color={'#222'} title='1 Year' onPress={()=>{setDuration(getDuration(24*365)); setIsLoading(true); }}/>
       </View>
       {(!isLoading)?<Chart prices={priceArray.prices} />:(
         <View>

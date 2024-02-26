@@ -6,7 +6,7 @@ import CoinDetails from '../screens/CoinDetails';
 
 export type RootStackParamList = {
     Home: undefined;
-    CoinDatails: undefined;
+    CoinDetails: {coinId: string};
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

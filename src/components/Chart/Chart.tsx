@@ -7,7 +7,7 @@ import findMinMaxInColumn from "../../utils/2D-ArrayUtils"
 
 const getChartData = (prices:number[][]):itemType[] => {
   const { min, max } = findMinMaxInColumn(prices, 1)
-  console.log("Min & Max Price In List", min, max)
+  // console.log("Min & Max Price In List", min, max)
   return prices.map(price=>({value: (Number(((price[1]-min)).toFixed(2)))}))
 }
 
