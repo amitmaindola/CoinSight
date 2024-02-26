@@ -1,14 +1,26 @@
 import { Image, StatusBar,StyleSheet, Text, View } from 'react-native';
-import Home from './src/screens/Home';
-import CoinDetails from './src/screens/CoinDetails';
+import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
+import Navigation from './src/navigation';
 
-export default function App() {
+export default function App():React.JSX.Element{
   return (
-    <View style={styles.container}>
-        <Home />
-        {/* <CoinDetails /> */}
-        <StatusBar barStyle="light-content" backgroundColor="#121212"/>
-    </View>
+    <NavigationContainer theme={{
+      dark: true,
+      colors:{
+        background: '#121212',
+        primary: 'white',
+        border: 'white',
+        card: 'white',
+        notification: 'white',
+        text: 'white'
+      }
+    }}>
+      <View style={styles.container}>
+            <Navigation />
+          <StatusBar barStyle="light-content" backgroundColor="#121212"/>
+      </View>
+    </NavigationContainer>
   );
 }
 

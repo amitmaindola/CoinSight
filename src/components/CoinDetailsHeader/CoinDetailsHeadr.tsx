@@ -2,6 +2,10 @@ import React from 'react'
 import { Text, View, StyleSheet, Image } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'; 
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+type Nav = {
+  navigate: (value: string) => void;
+}
 
 interface CoinDetailsHeaderProps {
     image: string,
@@ -11,9 +15,11 @@ interface CoinDetailsHeaderProps {
 }
 
 function CoinDetailsHeader({image, symbol, name, market_cap_rank}:CoinDetailsHeaderProps) {
+  const { navigate } = useNavigation<Nav>()
+
   return (
       <View style={styles.header}>
-        <Ionicons style={{}} name="chevron-back-sharp" size={32} color="white" />
+        <Ionicons onPress={()=> navigate("Home")} style={{}} name="chevron-back-sharp" size={32} color="white" />
         <View style={styles.headerData}>
           <Image source={{uri:image}} height={28} width={28}/>
           <Text style={styles.title}>{symbol.toUpperCase()}</Text>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CryptoCurrencyItem } from "../types";
+import { CryptoCurrencyItem, TimeDuration } from "../types";
 
 export const getDetailedCoinData = async (coinId:string) => {
   try {
@@ -10,9 +10,10 @@ export const getDetailedCoinData = async (coinId:string) => {
   }
 }
 
-export const getCoinMarketChart = async (coinId:string, selectedRange:string) => {
+export const getCoinMarketChart = async (coinId:string, duration: TimeDuration) => {
   try {
-    const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${selectedRange}&interval=hourly`)
+    // const response = await axios.get(`https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range?vs_currency=usd&from=1704823444&to=1704909844&precision=2`)
+    const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart/range?vs_currency=usd&from=${duration.from}&to=${duration.to}&precision=2`)
     return response.data;
   } catch (e) {
     console.log(e)

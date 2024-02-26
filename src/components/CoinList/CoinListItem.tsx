@@ -1,7 +1,13 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import CryptoCurrencyItem from '../../types/CryptoCurrency';
+import { useNavigation } from '@react-navigation/native';
+type Nav = {
+  navigate: (value: string) => void;
+}
+
+
 
 function formatNumber(value:number) {
   if (value >= 1000000000000) {
@@ -24,8 +30,10 @@ interface CoinListItemProps {
 
 
 function CoinListItem({coinData}:CoinListItemProps) {
+  const { navigate } = useNavigation<Nav>()
+
   return (
-    <View style={[styles.coinItem, styles.flexRow, styles.alignCenter, styles.justifyBetween]}>
+    <Pressable onPress={()=>{ navigate("CoinDetails") }} style={[styles.coinItem, styles.flexRow, styles.alignCenter, styles.justifyBetween]}>
         <View style={[styles.justifyBetween, styles.flexRow, styles.alignCenter]}>
           <View style={styles.symbolCover}>
             <Image source={{uri:coinData.image}} style={{width:'100%', height:'100%', borderRadius: 100}}/>
@@ -46,7 +54,7 @@ function CoinListItem({coinData}:CoinListItemProps) {
             <Text style={styles.desc}>MCap {formatNumber(coinData.market_cap)} Bn</Text>
           </View>
         </View>
-      </View>
+      </Pressable>
   )
 }
 

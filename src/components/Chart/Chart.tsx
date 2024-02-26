@@ -7,7 +7,7 @@ import findMinMaxInColumn from "../../utils/2D-ArrayUtils"
 
 const getChartData = (prices:number[][]):itemType[] => {
   const { min, max } = findMinMaxInColumn(prices, 1)
-  console.log(min, max)
+  console.log("Min & Max Price In List", min, max)
   return prices.map(price=>({value: (Number(((price[1]-min)).toFixed(2)))}))
 }
 
@@ -36,7 +36,7 @@ const Chart = ({prices}:ChartComponentProps) => {
         // rotateLabel
         width={Dimensions.get('window').width}
         hideDataPoints
-        spacing={5}
+        spacing={1}
         color="#00ff83"
         thickness={2}
         startFillColor="rgba(20,105,81,0.5)"
@@ -50,15 +50,21 @@ const Chart = ({prices}:ChartComponentProps) => {
         yAxisThickness={0}
         rulesType="solid"
         rulesColor="rgba(130,130,130, 0.3)"
-        yAxisTextStyle={{color: 'gray'}}
-        yAxisSide = {yAxisSides.LEFT}
-        // hideYAxisText
+        // yAxisTextStyle={{color: 'gray'}}
+        // yAxisSide = {yAxisSides.LEFT}
+        hideYAxisText
 
-        xAxisColor="lightgray"
+        xAxisColor="#aaa"
+        xAxisType="dashed"
+
+        // animations
+        isAnimated
+        animationDuration={2000}
+
         pointerConfig={{
           pointerStripHeight: 130,
           pointerStripWidth: 1,
-          pointerStripColor: 'white',
+          pointerStripColor: '#fff',
           pointerColor: 'white',
           radius: 4,
           pointerLabelWidth: 100,
