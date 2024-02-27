@@ -2,6 +2,7 @@
     "conventionalCommits.scopes": [
         "screens",
         "Cryptocurrencies List",
-        "Coin Details Screen"
+        "Coin Details Screen",
+        "Navigation"
     ]
 }
