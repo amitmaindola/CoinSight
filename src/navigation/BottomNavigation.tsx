@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Home from '../screens/Home';
-import {Entypo, FontAwesome} from '@expo/vector-icons'
+import {Entypo, AntDesign, FontAwesome} from '@expo/vector-icons'
 import WatchList from '../screens/WatchList';
 
 const Tab = createBottomTabNavigator();
@@ -24,12 +24,16 @@ function BottomNavigation():React.JSX.Element {
     }}
     >
       <Tab.Screen name="Home" component={Home} options={{
-        tabBarIcon: ({focused, color})=> <Entypo name='home' size={focused ? 30 : 25} color={color}/>
+        tabBarIcon: ({focused, color})=> <Entypo name='home' size={focused ? 27 : 25} color={color}/>
       }}/>
       <Tab.Screen name="WatchList" component={WatchList} options={{
-        tabBarIcon: ({focused, color})=> <FontAwesome name='star' size={focused ? 30 : 25} color={color}/>
+        tabBarIcon: ({focused, color})=> <FontAwesome name='star' size={focused ? 27 : 25} color={color}/>
       }}/>
-      {/* <Tab.Screen name="Settings" component={<View>Settings</View>} /> */}
+
+      <Tab.Screen name="My Coins" component={WatchList} options={{
+        tabBarIcon: ({focused, color})=> <AntDesign name='piechart' size={focused ? 27 : 25} color={color}/>
+      }}/>
+
     </Tab.Navigator>
   );
 }

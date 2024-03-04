@@ -1,0 +1,2 @@
+Diffirence between React.ReactNode and React.JSX.Element
+Have to read about all hooks

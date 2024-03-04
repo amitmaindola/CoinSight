@@ -2,6 +2,7 @@ import { Image, StatusBar,StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import Navigation from './src/navigation';
+import WatchListProvider from './src/contexts/WatchListContext';
 
 export default function App():React.JSX.Element{
   return (
@@ -13,13 +14,15 @@ export default function App():React.JSX.Element{
         border: 'white',
         card: 'white',
         notification: 'white',
-        text: 'white'
+        text: '#FFF'
       }
     }}>
-      <View style={styles.container}>
-            <Navigation />
-          <StatusBar barStyle="light-content" backgroundColor="#121212"/>
-      </View>
+      <WatchListProvider>
+        <View style={styles.container}>
+              <Navigation />
+            <StatusBar barStyle="light-content" backgroundColor="#121212"/>
+        </View>
+      </WatchListProvider>
     </NavigationContainer>
   );
 }
