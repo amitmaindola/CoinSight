@@ -3,6 +3,7 @@ import React from 'react';
 import Home from '../screens/Home';
 import {Entypo, AntDesign, FontAwesome} from '@expo/vector-icons'
 import WatchList from '../screens/WatchList';
+import MyCoins from '../screens/Portfolio/Portfolio';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +31,7 @@ function BottomNavigation():React.JSX.Element {
         tabBarIcon: ({focused, color})=> <FontAwesome name='star' size={focused ? 27 : 25} color={color}/>
       }}/>
 
-      <Tab.Screen name="My Coins" component={WatchList} options={{
+      <Tab.Screen name="My Coins" component={MyCoins} options={{
         tabBarIcon: ({focused, color})=> <AntDesign name='piechart' size={focused ? 27 : 25} color={color}/>
       }}/>
 

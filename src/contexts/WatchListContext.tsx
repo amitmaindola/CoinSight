@@ -2,7 +2,8 @@ import React, { createContext, useContext, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface contextValueType{
-    watchListCoinIds: string[]
+    watchListCoinIds: string[],
+    setWatchListCoinIds: Function
 }
 
 interface WatchListProviderProps {
@@ -10,7 +11,7 @@ interface WatchListProviderProps {
 }
   
 
-const WatchListContext = createContext({watchListCoinIds: []} as contextValueType)
+const WatchListContext = createContext({watchListCoinIds: [], setWatchListCoinIds: ()=>{}} as contextValueType)
 
 export const useWatchListContext = () => useContext(WatchListContext)
 
@@ -36,7 +37,7 @@ export default function WatchListProvider({children}:WatchListProviderProps):Rea
   }
 
   return (
-    <WatchListContext.Provider value={{watchListCoinIds: watchListCoinIds}}>
+    <WatchListContext.Provider value={{watchListCoinIds: watchListCoinIds, setWatchListCoinIds: setWatchListCoinIds}}>
         {children}
     </WatchListContext.Provider>
   )

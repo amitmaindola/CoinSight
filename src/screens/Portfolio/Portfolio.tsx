@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import CoinList from '../../components/CoinList/CoinList'
-import { View, Text, StyleSheet, FlatList, Image } from 'react-native'
+import { View, Text, StyleSheet, FlatList } from 'react-native'
 import { useWatchListContext } from '../../contexts/WatchListContext'
 import { CryptoCurrencyItem } from '../../types'
 import CoinListItem from '../../components/CoinList/CoinListItem'
@@ -49,7 +49,7 @@ async function getCoinListFromIds(watchListCoinIds:string[], watchListCoinList: 
 
 }
 
-function WatchList():React.JSX.Element {
+function Portfolio():React.JSX.Element {
   const {watchListCoinIds} = useWatchListContext()
   const [watchListCoinList, setWatchListCoinList] = useState<CryptoCurrencyItem[]>([])
   useEffect(() => {
@@ -57,25 +57,17 @@ function WatchList():React.JSX.Element {
   }, [watchListCoinIds])
 
 
+
+  
   return (
     <View>
-      <WatchListHeader HeaderTitle={"Favorites"}/>
-      {watchListCoinIds.length===0 ? 
-        <View style={styles.notFoundContainer}>
-          <Text style={styles.title}>No Favorites added!</Text>
-        </View>
-        :
-        <View>
-          <FlatList
-            data={watchListCoinList}
-            renderItem={({item}) => <CoinListItem coinData={item}/>}
-            keyExtractor={(item, index) => `${index}-${item.name}`}
-          />
-          {watchListCoinIds.length != watchListCoinList.length ? <Loader /> : <View></View>}
-        </View>
-      }
-      
-      
+      <WatchListHeader HeaderTitle={"Portfolio"}/>
+      <FlatList
+        data={watchListCoinList}
+        renderItem={({item}) => <CoinListItem coinData={item}/>}
+        keyExtractor={(item, index) => `${index}-${item.name}`}
+      />
+      {watchListCoinIds.length != watchListCoinList.length ? <Loader /> : <View></View>}
     </View>
   ) 
   }
@@ -83,20 +75,7 @@ function WatchList():React.JSX.Element {
 const styles = StyleSheet.create({
     text:{
         color: 'white'
-    },
-    img:{
-      width: 100,
-      height: 100
-    },
-    title:{
-      fontSize: 18,
-      color: '#eee',
-      textAlign: 'center'
-
-    },
-    notFoundContainer:{
-      marginTop: 40
     }
 })
 
-export default WatchList
+export default Portfolio

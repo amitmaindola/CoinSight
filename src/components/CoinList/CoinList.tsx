@@ -11,7 +11,6 @@ const fetchData = async (setCryptoCurrenciesData:Function, currentPage:number, s
   if(currentPage < 4){ // Just for saving API request limit
     const newData = await getMarketData(currentPage);
     setCryptoCurrenciesData((cryptoCurrenciesData: CryptoCurrencyItem[]) => [...cryptoCurrenciesData, ...newData]);
-    // console.log("Called For Page Number ", currentPage)
     setCurrentPage(currentPage + 1);
   }
 }

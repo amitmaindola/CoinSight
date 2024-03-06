@@ -1,23 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Text, View, StyleSheet, Image } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'; 
-import { Feather } from '@expo/vector-icons';
+import { Feather, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useWatchListContext } from '../../contexts/WatchListContext';
+
+
 type Nav = {
   navigate: (value: string) => void;
 }
 
 interface CoinDetailsHeaderProps {
+    id: string,
     image: string,
     symbol: string,
     name: string,
     market_cap_rank: number
 }
 
-function CoinDetailsHeader({image, symbol, name, market_cap_rank}:CoinDetailsHeaderProps) {
+function CoinDetailsHeader({id, image, symbol, name, market_cap_rank}:CoinDetailsHeaderProps) {
   const { navigate } = useNavigation<Nav>()
+  const {watchListCoinIds, setWatchListCoinIds} = useWatchListContext()
+
+  const [addedToWatchList, setAddedToWatchList] = useState<boolean>(watchListCoinIds.includes(id))
+  
+
+  const addToWatchList = (coinId: string) => {
+    setWatchListCoinIds([...watchListCoinIds, coinId])
+    setAddedToWatchList(true)
+  }
+
+  const removeFromWatchList = (coinId: string) => {
+    setWatchListCoinIds(watchListCoinIds.filter(coinIdElement=> coinIdElement!=coinId))
+    setAddedToWatchList(false)
+  }
 
   return (
+    
       <View style={styles.header}>
         <Ionicons onPress={()=> navigate("Home")} style={{}} name="chevron-back-sharp" size={32} color="white" />
         <View style={styles.headerData}>
@@ -27,7 +46,7 @@ function CoinDetailsHeader({image, symbol, name, market_cap_rank}:CoinDetailsHea
         </View>
         <View style={styles.options}>
           <Feather name="search" size={28} color="white" />
-          <Feather name="star" size={28} color="white" />
+          {addedToWatchList ? <FontAwesome name="star"  onPress={()=>{removeFromWatchList(id)}} size={28} color="white"  /> : <Feather name="star" onPress={()=>{addToWatchList(id)}} size={28} color="white" />}
         </View>
       </View>
   )

@@ -22,8 +22,6 @@ const getDuration = (hours:number):TimeDuration => {
 
 const fetchChartData = async (coinId:string, setPriceArray:Function, duration: TimeDuration):Promise<void> =>{
   setPriceArray(await getCoinMarketChart(coinId, duration))
-  // console.log(getDuration(24))
-  
 }
 
 const fetchCoinData = async(coinId:string, setCoinDetails:Function):Promise<void> => {
@@ -40,12 +38,8 @@ function CoinDetails() {
   const [CoinDetails, setCoinDetails] = useState(null)
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // useEffect(()=>{
-  //   if(isLoading) setPriceArray({prices: [], market_caps:[], total_volumes:[]})
-  // }, [isLoading])
 
   useEffect(()=>{
-    // console.log("Array Length: ", priceArray.prices.length)
     setIsLoading(false);
   }, [priceArray])
 
@@ -70,7 +64,7 @@ function CoinDetails() {
   }, [duration])
 
   return CoinDetails ? <View>
-                          <CoinDetailsHeader image={CoinDetails.image.small} symbol={CoinDetails.symbol} name={CoinDetails.name} market_cap_rank={CoinDetails.market_data.market_cap_rank}/>
+                          <CoinDetailsHeader id={CoinDetails.id} image={CoinDetails.image.small} symbol={CoinDetails.symbol} name={CoinDetails.name} market_cap_rank={CoinDetails.market_data.market_cap_rank}/>
                           <View style={{padding: 10}}>
                             <Text style={styles.text}>{CoinDetails.name}</Text>
                             <View style={styles.priceContainer}>

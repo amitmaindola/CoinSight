@@ -28,7 +28,7 @@ interface CryptoCurrencyItem  {
     currency: string;
     percentage: number;
   } | null;
-  last_updated: string;
+  last_updated: string | null;
 }
 
 

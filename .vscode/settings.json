@@ -3,6 +3,7 @@
         "screens",
         "Cryptocurrencies List",
         "Coin Details Screen",
-        "Navigation"
+        "Navigation",
+        "WatchList Screen"
     ]
 }

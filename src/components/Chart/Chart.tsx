@@ -7,7 +7,6 @@ import findMinMaxInColumn from "../../utils/2D-ArrayUtils"
 
 const getChartData = (prices:number[][]):itemType[] => {
   const { min, max } = findMinMaxInColumn(prices, 1)
-  // console.log("Min & Max Price In List", min, max)
   return prices.map(price=>({value: (Number(((price[1]-min)).toFixed(2)))}))
 }
 
@@ -20,7 +19,6 @@ const Chart = ({prices}:ChartComponentProps) => {
   const lineChartData = getChartData(prices)
   const { min, max } = findMinMaxInColumn(prices, 1)
 
-  // console.log(lineChartData)
   
   return(
     <View
@@ -72,7 +70,6 @@ const Chart = ({prices}:ChartComponentProps) => {
           activatePointersOnLongPress: true,
           autoAdjustPointerLabelPosition: false,
           pointerLabelComponent: (items:itemType[]) => {
-            // console.log("Items", items)
             return (
               <View
                 style={{
@@ -82,9 +79,6 @@ const Chart = ({prices}:ChartComponentProps) => {
                   marginTop: -30,
                   marginLeft: -40,
                 }}>
-                {/* <Text style={{color: 'white', fontSize: 14, marginBottom:6,textAlign:'center'}}>
-                  {items[0].date}
-                </Text> */}
 
                 <View style={{paddingHorizontal:14,paddingVertical:6, borderRadius:16, backgroundColor:'white'}}>
                   <Text style={{fontWeight: 'bold',textAlign:'center'}}>
