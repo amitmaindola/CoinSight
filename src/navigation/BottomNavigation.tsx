@@ -3,7 +3,7 @@ import React from 'react';
 import Home from '../screens/Home';
 import {Entypo, AntDesign, FontAwesome} from '@expo/vector-icons'
 import WatchList from '../screens/WatchList';
-import MyCoins from '../screens/Portfolio/Portfolio';
+import MyCoins from '../screens/Portfolio';
 
 const Tab = createBottomTabNavigator();
 
