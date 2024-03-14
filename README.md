@@ -1,6 +1,6 @@
 # CoinSight - Your Ultimate Cryptocurrency Companion
 
-CoinSight is a comprehensive cryptocurrency tracking app designed to streamline your crypto investment journey. With an intuitive interface and robust features, CoinSight offers a seamless experience for both beginners and experienced investors alike.
+CoinSight is a comprehensive cryptocurrency tracking app designed to streamline your crypto investment journey. With its intuitive interface and robust features, CoinSight offers a seamless experience for those interested in cryptocurrencies.
 
 
 ## App Screenshots
